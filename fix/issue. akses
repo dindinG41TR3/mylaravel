@@ -1,0 +1,22 @@
+bagian 
+laravel new toko-online
+
+cd home/laradock/.composer/composer.json
+tambahkan dibawah
+protected function download($zipFile, $version = 'master')
+{
+    switch ($version) {
+        case 'develop':
+            $filename = 'latest-develop.zip';
+            break;
+        case 'master':
+            $filename = 'latest.zip';
+            break;
+    }
+
+    $response = (new Client)->get('http://cabinet.laravel.com/'.$filename);
+
+    file_put_contents($zipFile, $response->getBody());
+
+    return $this;
+}
